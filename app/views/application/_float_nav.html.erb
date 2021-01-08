@@ -16,6 +16,10 @@
 		</div>
 	</li>
 	<% end %>
+	
+	<% if current_user.admin? %>
+	<%= render 'setup_menu' %>
+	<% end %>
 
 	<% if !authenticated? %>
 	<li class="nav-item"><%= link_to("Sign in".html_safe, session_login_path, class:"d-inline-block px-2", style:"background-color:#DBE6EC", data: { turbolinks: false })%></li>

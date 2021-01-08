@@ -1,0 +1,20 @@
+<li class="nav-item dropdown d-flex align-items-center">
+	<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><%= bootstrap_icon 'sliders', size: '24x24', style: 'vertical-align:-0.255em;' %></a>
+	<div class="dropdown-menu dropdown-menu-right" id="user-menu">
+		<%= menu_group 'Course' do %>
+			<%= menu_link 'Course administration...', admin_course_path, icon: 'inboxes', remote: true %>
+			<%= menu_link 'Site configuration...', admin_site_path, icon: 'wrench', remote: true %>
+			<%= menu_link 'Edit permissions...', admin_users_path, icon: 'unlock', remote: true %>
+			<%= menu_link 'Update courseware', admin_update_path, icon: 'download', method: :post %>
+		<% end %>
+		<% if not Settings.mailer_from.present? %>
+		<%= menu_link 'Add course e-mail address...', admin_site_path, remote: true %>
+		<% end %>
+		<% if not Settings.webhook_secret.present? %>
+		<%= menu_link 'Add webhook from GitHub...', admin_site_path, remote: true %>
+		<% end %>
+		<% if not Settings.hands_allow.present? %>
+		<%= menu_link 'Enable question queue...', admin_site_path, remote: true %>
+		<% end %>
+	</div>
+</li>
