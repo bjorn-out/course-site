@@ -32,6 +32,7 @@ gem 'helpscout'
 gem 'bugsnag'
 gem 'rubycas-client', :git => 'https://github.com/rubycas/rubycas-client.git'
 gem 'slack-notifier'
+gem 'github_api'
 
 # manages settings in database
 gem 'rails-settings-cached', '0.4.1'

@@ -47,4 +47,39 @@ class CourseTools
 
 	end
 	
+	def prune_untouched(touched_subpages)
+		# remove any subpage that was apparently not in the repo anymore
+		Subpage.where("id not in (?)").delete_all
+	end
+	
+	def prune_empty
+		# remove all pages having no subpages
+		to_delete = Page.includes(:subpages).where(:subpages => { :id => nil }).pluck(:id)
+		Page.where("id in (?)", to_delete).delete_all
+
+		# remove all sections having no pages
+		to_delete = Section.includes(:pages).where(:pages => { :id => nil }).pluck(:id)
+		Section.where("id in (?)", to_delete).delete_all
+		
+		# remove psetfiles for psets that have no parent page
+		# orphan_psets = Pset.includes(:page).where(:pages => { :id => nil })
+		#.each do |p|
+			# p.pset_files.delete_all
+		# end
+		
+		# remove psets that have no submits and no parent page
+		# to_remove = Pset.where("psets.id in (?)", orphan_psets.map(&:id)).includes(:submits).where(:submits => { :id => nil }).pluck(:id)
+		# Pset.where("psets.id in (?)", to_remove).delete_all
+	end
+	
+	def recreate_all_slugs
+		Section.all.each do |p|
+			p.update(slug: nil)
+		end
+		Page.all.each do |p|
+			p.update(slug: nil)
+		end
+	end
+
+	
 end
